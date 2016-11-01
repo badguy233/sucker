@@ -1,0 +1,129 @@
+{% extends "goods/basetwo.html" %}
+
+{ %block title%}
+天天生鲜-{{good.gname}}
+{ %endblock%}
+
+
+{%block javascripttwo%}
+    <script type="text/javascript">
+        function add(){
+            var num = parseInt($("#txt_num").val())+1
+            var price = $("#hid_gprice").val()
+
+            $("#txt_num").val(num)
+            $("#div_sumpric").html('总价：<em>'+accMul(num,price)+'元</em>') 
+        }
+
+
+        function minus(){
+            if (parseInt($("#txt_num").val())>1){
+                var num = parseInt($("#txt_num").val())-1
+                var price = $("#hid_gprice").val()
+
+                $("#txt_num").val(num)
+                $("#div_sumpric").html('总价：<em>'+accMul(num,price)+'元</em>') 
+            }
+        }
+
+
+        function txt_num_blur(){
+            if(!isNaN($("#txt_num").val())){
+                if (parseInt($("#txt_num").val())>1){
+                    var num = parseInt($("#txt_num").val())
+                    var price = $("#hid_gprice").val()
+
+                    $("#txt_num").val(num)
+                    $("#div_sumpric").html('总价：<em>'+accMul(num,price)+'元</em>') 
+                }
+                else
+                {
+                    var price = $("#hid_gprice").val()
+                    $("#txt_num").val(1)
+                    $("#div_sumpric").html('总价：<em>'+accMul(1,price)+'元</em>') 
+                }
+            }else{
+                    var price = $("#hid_gprice").val()
+                    $("#txt_num").val(1)
+                    $("#div_sumpric").html('总价：<em>'+accMul(1,price)+'元</em>') 
+            }
+        }
+
+
+        //js 乘法函数  
+        //调用：accMul(arg1,arg2)   
+        //返回值：arg1乘以arg2的精确结果   
+        function accMul(arg1,arg2)   
+        {   
+          var m=0,s1=arg1.toString(),s2=arg2.toString();   
+          try{m+=s1.split(".")[1].length}catch(e){}   
+          try{m+=s2.split(".")[1].length}catch(e){}   
+          return Number(s1.replace(".",""))*Number(s2.replace(".",""))/Math.pow(10,m)   
+        }  
+
+    </script>
+{%endblock%}
+
+{%block basetwo%}
+    <div class="goods_detail_con clearfix">
+        <div class="goods_detail_pic fl"><img src="/static/{{good.gpic}}"></div>
+
+        <div class="goods_detail_list fr">
+            <h3>{{good.gname}}</h3>
+            <p>{{good.gdescrption}}</p>
+            <div class="prize_bar">
+                <span class="show_pirze">¥<em>{{good.gprice}}</em></span>
+                <input type="hidden" id="hid_gprice" value="{{good.gprice}}"/>
+                <span class="show_unit">{{good.gunit}}</span>
+            </div>
+            <div class="goods_num clearfix">
+                <div class="num_name fl">数 量：</div>
+                <div class="num_add fl">
+                    <input type="text" id="txt_num" onblur="txt_num_blur()" class="num_show fl" value="1">
+                    <a href="javascript:add();" class="add fr">+</a>
+                    <a href="javascript:minus();" class="minus fr">-</a>   
+                </div> 
+            </div>
+            <div class="total" id="div_sumpric">总价：<em>16.80元</em></div>
+            <div class="operate_btn">
+                <a href="javascript:;" class="buy_btn">立即购买</a>
+                <a href="javascript:;" class="add_cart" id="add_cart">加入购物车</a>             
+            </div>
+        </div>
+    </div>
+
+    <div class="main_wrap clearfix">
+        <div class="l_wrap fl clearfix">
+            <div class="new_goods">
+                <h3>新品推荐</h3>
+                <ul>
+                {%for good1 in list1%}                        
+                    <li>
+                        <a href="/goods/detail/{{good1.id}}/"><img src="/static/{{good1.gpic}}"></a>
+                        <h4><a href="/goods/detail/{{good1.id}}">{{good1.gname}}</a></h4>
+                        <div class="prize">￥{{good1.gprice}}</div>
+                    </li>
+                {%endfor%}
+                </ul>
+            </div>
+        </div>
+
+        <div class="r_wrap fr clearfix">
+            <ul class="detail_tab clearfix">
+                <li class="active">商品介绍</li>
+                <li>评论</li>
+            </ul>
+
+            <div class="tab_content">
+                <dl>
+                    <dt>商品详情：</dt>
+                    <dd>草莓采摘园位于北京大兴区 庞各庄镇四各庄村 ，每年1月-6月面向北京以及周围城市提供新鲜草莓采摘和精品礼盒装草莓，草莓品种多样丰富，个大香甜。所有草莓均严格按照有机标准培育，不使用任何化肥和农药。草莓在采摘期间免洗可以直接食用。欢迎喜欢草莓的市民前来采摘，也欢迎各大单位选购精品有机草莓礼盒，有机草莓礼盒是亲朋馈赠、福利送礼的最佳选择。 </dd>
+                </dl>
+            </div>
+
+        </div>
+    </div>
+
+
+{%endblock%}
+

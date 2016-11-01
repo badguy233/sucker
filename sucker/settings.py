@@ -38,6 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'tinymce',
+    'goods',
+    'login',
+    'shengyuan',
     'ucenter',
 ]
 
@@ -79,8 +82,8 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'NAME': 'sucker',
-        'HOST': '',
-        'PORT': '',
+        'HOST': 'localhost',
+        'PORT': '3306',
         'USER': 'root',
         'PASSWORD': 'mysql',
     }
@@ -133,3 +136,5 @@ TINYMCE_DEFAULT_CONFIG = {
     'width': 600,
     'height': 400,
 }
+
+MEDIA_ROOT=os.path.join(BASE_DIR,"static")
